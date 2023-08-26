@@ -20,6 +20,10 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/', [App\Http\Controllers\CarController::class, 'getCars']);
     Route::get('/car/add', [App\Http\Controllers\CarController::class, 'add']);
     Route::post('/car/add', [App\Http\Controllers\CarController::class, 'store']);
+    Route::post('/car/search', [App\Http\Controllers\CarController::class, 'search']);
+    Route::post('/car/checkListCarsAvailable', [App\Http\Controllers\CarController::class, 'checkListCarsAvailable']);
+
+
 
     Route::post('/reservation/{car_id}', [App\Http\Controllers\ReservationController::class, 'add']);
     Route::put('/reservation/{reservation_id}', [App\Http\Controllers\ReservationController::class, 'returnCar']);

@@ -6,6 +6,28 @@
 
 @section('content')
     <a class="btn btn-primary mx-4" href="/car/add" role="button">Add Car</a>
+    <form method="POST" action="/car/search">
+        @csrf
+        <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+            <div class="input-group">
+                <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
+                <input type="text" class="form-control" name="search_value"
+                    placeholder="search by brand, model, or police number">
+            </div>
+            <button type="submit" class="btn btn-primary mx-2">Search</button>
+        </div>
+    </form>
+
+    <div>
+        <form action="/car/checkListCarsAvailable" method="POST">
+            @csrf
+            <input type="date" name="start_date" />
+            <span>to</span>
+            <input type="date" name="end_date" />
+            <button type="submit" class="btn btn-primary mx-2">Check</button>
+        </form>
+    </div>
+
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
