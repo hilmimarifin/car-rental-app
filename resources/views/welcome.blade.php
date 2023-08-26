@@ -6,6 +6,21 @@
 
 @section('content')
     <a class="btn btn-primary mx-4" href="/car/add" role="button">Add Car</a>
+    @if($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ( $errors->all() as $error)
+            <li>
+                {{$error}}
+            </li>              
+            @endforeach
+        </ul>
+    </div>
+    @endif
+    @if(session()->has('error'))
+    <div class="alert alert-danger">{{session('error')}}</div>
+    @endif
+    <div class=""></div>
     <div class="table-responsive">
         <table class="table align-items-center mb-0">
             <thead>

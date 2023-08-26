@@ -14,15 +14,40 @@ class ReservationController extends Controller
     //
     public function add(string $car_id, Request $request){
 
+        $request->validate([
+            'start_date' => 'required|date|after_or_equal:today',
+            'duration' => 'required'
+        ]);
+        
+
         $user = Auth::user();
 
         $startDate = new DateTime($request->start_date);
         $duration = (int)$request->duration;
-
         $endDate = clone $startDate;
         $endDate->modify("+$duration days");
 
         $end_date = $endDate->format('Y-m-d');
+
+                 // Retrieve booked dates for the specific room
+                 $startoDate = $request->input('start_date');
+                 $endoDate = $end_date;
+                 $bookedDates = Reservation::where('car_id', $car_id)
+                 ->where(function ($query) use ($startoDate, $endoDate) {
+                     $query->whereBetween('start_date', [$startoDate, $endoDate])
+                         ->orWhereBetween('end_date', [$startoDate, $endoDate])
+                         ->orWhere(function ($query) use ($startoDate, $endoDate) {
+                             $query->where('start_date', '<=', $startoDate)
+                                 ->where('end_date', '>=', $endoDate);
+                         });
+                 })
+                 ->get();
+         
+         // Check for overlapping dates
+         if ($bookedDates->count() > 0) {
+             return redirect('/')->with('error', 'The selected dates are already booked.');
+         }
+         
 
         Reservation::create([
             'user_id' => $user->id,
