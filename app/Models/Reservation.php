@@ -10,6 +10,7 @@ class Reservation extends Model
 {
     use HasFactory;
     protected $guarded= ['id'];
+    // protected $dates = ['start_date', 'end_date'];
 
     public function user(): BelongsTo
     {

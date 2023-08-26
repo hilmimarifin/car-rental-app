@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use DateTime;
+use Carbon\Carbon;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -55,6 +56,12 @@ class ReservationController extends Controller
         $user = Auth::user();
         $reservations = Reservation::where('user_id', $user->id)
         ->whereNotNull('actual_end_date')->get();
+        foreach ($reservations as $reservation) {
+            $start = Carbon::parse($reservation->start_date);
+            $end = Carbon::parse($reservation->actual_end_date);
+            $durationInDays = $start->diffInDays($end);
+            $reservation->total_charge = $durationInDays * $reservation->car->price;
+        }    
         // dd($reservations);
         return view('completed_reservation', compact(['reservations']));
     }
