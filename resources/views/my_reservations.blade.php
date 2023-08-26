@@ -5,6 +5,17 @@
 @endsection
 
 @section('content')
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>
+                        {{ $error }}
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <div class="table-responsive">
         <table class="table align-items-center mb-0">
             <thead>
@@ -18,55 +29,57 @@
                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                         End Date</th>
                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                        Action</th>
+                        Return Date</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($reservations as $reservation)
-                <tr>
-                    <td>
-                        <div class="d-flex px-2 py-1">
-                            <div class="d-flex flex-column justify-content-center">
-                                <h6 class="mb-0 text-sm">{{$reservation->car->model}}</h6>
+                    <tr>
+                        <td>
+                            <div class="d-flex px-2 py-1">
+                                <div class="d-flex flex-column justify-content-center">
+                                    <h6 class="mb-0 text-sm">{{ $reservation->car->model }}</h6>
+                                </div>
                             </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="d-flex px-2 py-1">
-                            <div class="d-flex flex-column justify-content-center">
-                                <h6 class="mb-0 text-sm">{{$reservation->car->police_number}}</h6>
+                        </td>
+                        <td>
+                            <div class="d-flex px-2 py-1">
+                                <div class="d-flex flex-column justify-content-center">
+                                    <h6 class="mb-0 text-sm">{{ $reservation->car->police_number }}</h6>
+                                </div>
                             </div>
-                        </div>
-                    </td>
-                    <td class="align-middle text-center text-sm">
-                        <div class="d-flex px-2 py-1">
-                            <div class="d-flex flex-column justify-content-center">
-                                <h6 class="mb-0 text-sm">{{$reservation->start_date}}</h6>
+                        </td>
+                        <td class="align-middle text-center text-sm">
+                            <div class="d-flex px-2 py-1">
+                                <div class="d-flex flex-column justify-content-center">
+                                    <h6 class="mb-0 text-sm">{{ $reservation->start_date }}</h6>
+                                </div>
                             </div>
-                        </div>
-                    </td>
-                    <td class="align-middle">
-                        <div class="d-flex px-2 py-1">
-                            <div class="d-flex flex-column justify-content-center">
-                                <h6 class="mb-0 text-sm">{{$reservation->end_date}}</h6>
+                        </td>
+                        <td class="align-middle">
+                            <div class="d-flex px-2 py-1">
+                                <div class="d-flex flex-column justify-content-center">
+                                    <h6 class="mb-0 text-sm">{{ $reservation->end_date }}</h6>
+                                </div>
                             </div>
-                        </div>
-                    </td>
-                    <td class="align-middle">
-                        <div class="d-flex px-2 py-1">
-                            <div class="d-flex flex-column justify-content-center">
-                                <form method="POST" action="{{ "/reservation/"."$reservation->id" }}">
-                                    @method('put')
-                                    @csrf
-                                    <button type="submit" class="btn btn-primary">Return</button>
-                                </form>
+                        </td>
+                        <td class="align-middle">
+                            <div class="d-flex px-2 py-1">
+                                <div class="d-flex flex-column justify-content-center">
+                                    <form method="POST" action="{{ '/reservation/' . "$reservation->id" }}">
+                                        @method('put')
+                                        @csrf
+                                        <input type="hidden" name="start_date" value="{{ $reservation->start_date }}">
+                                        <input type="date" name="return_date" />
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </form>
+                                </div>
                             </div>
-                        </div>
-                    </td>
+                        </td>
 
-                </tr>
+                    </tr>
                 @endforeach
-                
+
             </tbody>
         </table>
     </div>

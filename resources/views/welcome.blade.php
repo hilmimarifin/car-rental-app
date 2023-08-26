@@ -6,19 +6,19 @@
 
 @section('content')
     <a class="btn btn-primary mx-4" href="/car/add" role="button">Add Car</a>
-    @if($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ( $errors->all() as $error)
-            <li>
-                {{$error}}
-            </li>              
-            @endforeach
-        </ul>
-    </div>
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>
+                        {{ $error }}
+                    </li>
+                @endforeach
+            </ul>
+        </div>
     @endif
-    @if(session()->has('error'))
-    <div class="alert alert-danger">{{session('error')}}</div>
+    @if (session()->has('error'))
+        <div class="alert alert-danger">{{ session('error') }}</div>
     @endif
     <div class=""></div>
     <div class="table-responsive">
@@ -71,7 +71,8 @@
                         <td class="align-middle">
                             <div class="d-flex px-2 py-1">
                                 <div class="d-flex flex-row justify-content-center">
-                                    <form id="{{"book-form-"."$car->id"}}" action="{{ "/reservation/"."$car->id" }}" method="POST">
+                                    <form id="{{ 'book-form-' . "$car->id" }}" action="{{ '/reservation/' . "$car->id" }}"
+                                        method="POST">
                                         @csrf
                                         <input type="date" name="start_date">
                                         <input type="number" name="duration"><span> days</span>

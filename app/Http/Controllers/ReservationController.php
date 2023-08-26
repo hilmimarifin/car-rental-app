@@ -16,7 +16,7 @@ class ReservationController extends Controller
 
         $request->validate([
             'start_date' => 'required|date|after_or_equal:today',
-            'duration' => 'required'
+            'duration' => 'required|integer|min:1'
         ]);
         
 
@@ -29,7 +29,7 @@ class ReservationController extends Controller
 
         $end_date = $endDate->format('Y-m-d');
 
-                 // Retrieve booked dates for the specific room
+                 // Retrieve booked dates for the specific car
                  $startoDate = $request->input('start_date');
                  $endoDate = $end_date;
                  $bookedDates = Reservation::where('car_id', $car_id)
@@ -68,11 +68,13 @@ class ReservationController extends Controller
         return view('my_reservations', compact(['reservations']));
     }
 
-    public function returnCar($reservation_id)
+    public function returnCar($reservation_id, Request $request)
     {
+        $request->validate([
+            'return_date' => 'required|date|after:' . $request->start_date,
+        ]);
         $reservation = Reservation::find($reservation_id);
-        // dd($reservation);
-        $reservation->update(['actual_end_date' => now()->format('Y-m-d')]);
+        $reservation->update(['actual_end_date' => $request->return_date]);
         return redirect('/reservation');
     }
 
