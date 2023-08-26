@@ -30,6 +30,9 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/reservation', [App\Http\Controllers\ReservationController::class, 'get']);
     Route::get('/reservation/completed', [App\Http\Controllers\ReservationController::class, 'getCompleted']);
 
+    Route::get('/user', [App\Http\Controllers\UserController::class, 'getUser']);
+    Route::put('/user/{id}', [App\Http\Controllers\UserController::class, 'edit']);
+
 
 
     Route::get('/my-reservations', function () {

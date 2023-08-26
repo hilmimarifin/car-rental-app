@@ -54,7 +54,7 @@
         <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link  {{request()->is('/') ? 'active':''}}"" href="/">
+                    <a class="nav-link  {{ request()->is('/') ? 'active' : '' }}"" href="/">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <svg width="12px" height="12px" viewBox="0 0 45 40" version="1.1"
@@ -82,7 +82,7 @@
 
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{request()->is('reservation') ? 'active':''}}"" href="/reservation">
+                    <a class="nav-link {{ request()->is('reservation') ? 'active' : '' }}"" href="/reservation">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <svg width="12px" height="12px" viewBox="0 0 45 40" version="1.1"
@@ -110,7 +110,8 @@
 
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{request()->is('reservation/completed') ? 'active':''}}" href="/reservation/completed">
+                    <a class="nav-link {{ request()->is('reservation/completed') ? 'active' : '' }}"
+                        href="/reservation/completed">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <svg width="12px" height="12px" viewBox="0 0 45 40" version="1.1"
@@ -151,12 +152,26 @@
                     <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
                         <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="/">Home</a>
                         </li>
-                        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">@yield('title')</li>
+                        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">@yield('title')
+                        </li>
                     </ol>
                     <h6 class="font-weight-bolder mb-0">Dashboard</h6>
                 </nav>
                 <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                     <ul class="navbar-nav  justify-content-end">
+                        <li class="nav-item d-flex align-items-center mx-10">
+                            <a href="/user"
+                                {{-- onclick="event.preventDefault();
+                                                     document.getElementById('profile-form').submit();"class="nav-link text-body font-weight-bold px-0" --}}
+                                                     >
+                                <i class="fa fa-user me-sm-1"></i>
+                                <span class="d-sm-inline d-none">Profie</span>
+                            </a>
+                            {{-- <form id="profile-form" action="/user" method="POST" class="d-none">
+                                @csrf
+                            </form> --}}
+
+                        </li>
                         <li class="nav-item d-flex align-items-center">
                             <a href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
@@ -184,7 +199,7 @@
                                 <div class="col-lg-6 col-7">
                                     <h6>
                                         @yield('title')
-                                    <h6>
+                                        <h6>
                                 </div>
                             </div>
                         </div>
